@@ -17,11 +17,22 @@ public class ReflectOnImpact : MonoBehaviour
 			
 			lastCollisionPos = transform.position;
 			
-			Vector3 normal = collision.contacts[0].normal;
+			print (collision.contacts.Length);
 			
-			transform.forward = Vector3.Reflect(transform.forward, normal);
-			Debug.DrawLine(transform.position, transform.position + transform.forward * 10, Color.red, 2);
-		
+			RaycastHit hit;
+			Vector3 normal;
+			if(Physics.Raycast(transform.position, transform.forward, out hit,10f))
+			{
+				normal = hit.normal;
+			
+				Debug.DrawLine(transform.position, transform.position + normal * 10, Color.blue, 2);
+				
+				
+				transform.forward = Vector3.Reflect(transform.forward, normal);
+				Debug.DrawLine(transform.position, transform.position + transform.forward * 10, Color.red, 2);
+				
+			}
+			
 		}
 	}
 }
