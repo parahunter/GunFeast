@@ -38,11 +38,19 @@ public class TakeDamage : MonoBehaviour {
 		}
 	}
 	
+	private Shoot _shootScript;
+	
+	public void Start()
+	{
+		_shootScript = GetComponent<Shoot>();	
+	}
+	
 	private void Die()
 	{
 		Instantiate(bloodSplatter, transform.position, Quaternion.identity);
 		transform.position = new Vector3(9001,9001,9001);
 		
+		_shootScript.ResetToPistol();
 		Invoke("Respawn", stayDeadTime);
 	}
 	

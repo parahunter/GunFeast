@@ -9,18 +9,14 @@ public class Pistol : Gun
 	
 	public float timeBetweenShots = 3f;
 	
-	private bool canShoot = true;
+	private bool canShoot = false;
 	
 	// Use this for initialization
 	void Start () 
 	{
 		_spawnPoint = transform.Find("spawnPoint");
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 
 	#region implemented abstract members of Gun
 	public override void Shoot (float triggerValue)
@@ -41,7 +37,7 @@ public class Pistol : Gun
 	
 	
 	#region implemented abstract members of Gun
-	public override void Reset ()
+	public override void ResetGun ()
 	{
 		canShoot = true;
 	}

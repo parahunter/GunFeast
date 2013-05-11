@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class SynhRendererToInvolBlink : MonoBehaviour {
+public class SynhRendererToInvolBlink : MonoBehaviour 
+{
 	
 	private TakeDamage _damageScript;
 	
@@ -11,7 +12,8 @@ public class SynhRendererToInvolBlink : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		renderer.enabled = _damageScript.rendererEnabled;
 	}
 }

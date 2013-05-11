@@ -12,13 +12,14 @@ public class Move : MonoBehaviour
 	private Controls _controlScript;
 	
 	private float _moveTime = 0;
-	private const float _inputThreshold = 0.8f; 
+	private const float _inputThreshold = 0.9f; 
 	
 	private bool _movementEnabled = true;
 	
 	private bool _canDodge = false;
 	private bool _startDodge = false;
 	
+	private ParticleEmitter _emitter;
 	public float dodgeSpeed = 20;
 	public float dodgeDotThreshold = 0.5f;
 	public float dodgeTimeThreshold = 0.3f;
@@ -49,6 +50,8 @@ public class Move : MonoBehaviour
 	{
 		_damageScript = GetComponent<TakeDamage>();
 		_controlScript = GetComponent<Controls>();
+		
+		_emitter = transform.Find("Detailed Smoke").particleEmitter;
 	}
 			
 	private Vector3 _lastMoveVec = Vector3.forward;
@@ -109,8 +112,7 @@ public class Move : MonoBehaviour
 	{
 		_dodging = true;
 		_damageScript.isInvolnurable = true;
-		
-		print ("dodging");
+		_emitter.emit = true;
 		
 		Vector3 moveDir = Vector3.zero;
 		moveDir.x = input.x * dodgeSpeed;
@@ -120,6 +122,7 @@ public class Move : MonoBehaviour
 		
 		_dodging = false;
 		_damageScript.isInvolnurable = false;
+		_emitter.emit = false;
 	}
 	
 	private IEnumerator _TimeThreshold()

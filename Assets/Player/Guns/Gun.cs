@@ -6,5 +6,5 @@ public abstract class Gun : MonoBehaviour
 
 	public abstract void Shoot(float triggerValue);
 	
-	public abstract void Reset();
+	public abstract void ResetGun();
 }
