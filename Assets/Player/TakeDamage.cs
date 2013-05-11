@@ -12,7 +12,16 @@ public class TakeDamage : MonoBehaviour {
 	private bool _isInvolnurable = false;
 	public bool isInvolnurable
 	{
-		get{return _isInvolnurable;}	
+		get{return _isInvolnurable;}
+		set
+		{
+			_isInvolnurable = value;
+			if(value == true)
+				gameObject.layer = LayerMask.NameToLayer( "Involnurable" );	
+			else
+				gameObject.layer = LayerMask.NameToLayer( "Default" );	
+			
+		}
 	}
 	
 	private bool _rendererEnabled = true;
@@ -23,7 +32,7 @@ public class TakeDamage : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision collision)
 	{
-		if(collision.collider.tag == "Bullet" && !_isInvolnurable)
+		if(collision.collider.tag == "Bullet" && !isInvolnurable)
 		{
 			Die ();
 		}
@@ -46,9 +55,7 @@ public class TakeDamage : MonoBehaviour {
 		
 	private IEnumerator _RunInvolnurable()
 	{
-		
-		
-		_isInvolnurable = true;
+		isInvolnurable = true;
 		for(int i = 0 ; i < amountOfInvolBlinks ; i++)
 		{
 			_rendererEnabled = !_rendererEnabled;	
@@ -56,6 +63,6 @@ public class TakeDamage : MonoBehaviour {
 		}
 		
 		_rendererEnabled = true;
-		_isInvolnurable = false;
+		isInvolnurable = false;
 	}
 }

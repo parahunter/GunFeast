@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Shoot : MonoBehaviour 
 {
-	
-	
 	public Gun currentGun;
 	
 	private Controls _controlScript;
