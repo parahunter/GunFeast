@@ -19,9 +19,7 @@ public class Shoot : MonoBehaviour
 	void Update () 
 	{
 		float triggerVal = _controlScript.GetShoot();
-		
-		
-		
+		 
 		if(triggerVal > 0)
 			currentGun.Shoot(triggerVal);
 		else

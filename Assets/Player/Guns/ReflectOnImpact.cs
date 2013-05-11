@@ -17,8 +17,6 @@ public class ReflectOnImpact : MonoBehaviour
 			
 			lastCollisionPos = transform.position;
 			
-			print (collision.contacts.Length);
-			
 			RaycastHit hit;
 			Vector3 normal;
 			if(Physics.Raycast(transform.position, transform.forward, out hit,10f))

@@ -31,13 +31,15 @@ public class Pistol : Gun
 			audio.PlayWithRandomPitch(0.8f, 1.2f);
 			canShoot = false;
 			Transform bullet = (Transform)Instantiate(bulletPrefab, _spawnPoint.position, _spawnPoint.rotation);
+			
+			
 		}
 		
 	}
 	#endregion
 	
-
-
+	
+	
 	#region implemented abstract members of Gun
 	public override void Reset ()
 	{

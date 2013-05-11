@@ -17,15 +17,15 @@ public class Move : MonoBehaviour
 	
 	private bool _movementEnabled = true;
 	
-
+	private bool _canDodge = false;
+	public float dodgeTimeTreshold = 0.3f;
+	public Vector2 dodgeFirstDirection;
 	
 	public void OnRespawn()
 	{
-
-		_moveTime = 0;
-		
+		_moveTime = 0;	
 		rigidbody.velocity = Vector3.zero;
-		
+
 		_horizontalVel = Vector2.zero;
 	}
 	
@@ -38,7 +38,6 @@ public class Move : MonoBehaviour
 	void Start()
 	{
 		_controlScript = GetComponent<Controls>();
-		
 	}
 			
 	private Vector3 _lastMoveVec = Vector3.forward;
@@ -68,6 +67,7 @@ public class Move : MonoBehaviour
 			_lastMoveVec = moveVec;
 			rigidbody.velocity = moveVec;
 		}
+		else
 		{
 			Vector3 moveVec = Vector3.Lerp(_lastMoveVec, Vector3.zero, slideFriction * Time.deltaTime);
 			_lastMoveVec = moveVec;
