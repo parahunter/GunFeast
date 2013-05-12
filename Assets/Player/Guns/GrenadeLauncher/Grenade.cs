@@ -20,7 +20,8 @@ public class Grenade : MonoBehaviour
 			Instantiate(grenadeFragmentPrefab, transform.position, rot);
 		}
 		
-		shootByPlayer.GetComponent<Shoot>().ResetToPistol();
+		if(shootByPlayer != null)
+			shootByPlayer.GetComponent<Shoot>().ResetToPistol();
 	}
 	
 }
