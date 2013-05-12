@@ -24,6 +24,12 @@ public class TakeDamage : MonoBehaviour {
 		}
 	}
 	
+	private bool _dead = false;
+	public bool dead
+	{
+		get{return _dead;}	
+	}
+	
 	private bool _rendererEnabled = true;
 	public bool rendererEnabled
 	{
@@ -47,15 +53,17 @@ public class TakeDamage : MonoBehaviour {
 	
 	private void Die()
 	{
+		_dead = true;
 		Instantiate(bloodSplatter, transform.position, Quaternion.identity);
 		transform.position = new Vector3(9001,9001,9001);
 		
 		_shootScript.ResetToPistol();
-		Invoke("Respawn", stayDeadTime);
+		
 	}
 	
 	public void Respawn()
 	{	
+		_dead = false;
 		transform.position = RespawnManager.instance.GetSpawnPos();
 		
 		StartCoroutine( _RunInvolnurable() );

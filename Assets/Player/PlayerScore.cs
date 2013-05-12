@@ -5,30 +5,17 @@ public class PlayerScore{
 	
 	public int playerScore;
 	public int pointStreak;
+	public int index;
 	
-	private int _multiplier = 1;
 	
-	
-	private int _multiplierBaseline = 0;
-	public AnimationCurve _multiplierCurve;
-	
-	public PlayerScore(AnimationCurve curve)
+	public PlayerScore(int index)
 	{
-		_multiplierCurve = curve;
-	}
-		
-	public void IncrementMultiplier(int amount)
-	{
-		_multiplierBaseline += amount;
-		UpdateMultiplier();
+		this.index = index;
 	}
 	
 	public void IncrementScore()
 	{
-		playerScore += _multiplier;
-		pointStreak++;
-		
-		UpdateMultiplier();
+		playerScore ++;
 	}
 	
 	public void SetScore(int amount)
@@ -41,20 +28,5 @@ public class PlayerScore{
 		return playerScore;
 	}
 	
-	public int GetMultiplier()
-	{
-		return _multiplier;
-	}
-	
-	public void ResetMultiplier()
-	{
-		pointStreak = 0;
-		_multiplierBaseline = 0;
-		UpdateMultiplier();
-	}
-	
-	public void UpdateMultiplier()
-	{
-		_multiplier = _multiplierBaseline + Mathf.FloorToInt(_multiplierCurve.Evaluate(pointStreak));
-	}
+
 }

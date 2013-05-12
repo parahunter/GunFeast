@@ -12,32 +12,57 @@ public class ScoreManager : MonoBehaviour
 	
 	public List<PlayerScore> playerScores = new List<PlayerScore>();
 	
-	public AnimationCurve multiplierCurve;
 	
 	// Use this for initialization
-	void Start () 
+	void Awake () 
 	{
 		if(instance == null)
 		{
 			instance = this;
+			
+			PlayerScoreMessage message = (PlayerScoreMessage)FindObjectOfType(typeof(PlayerScoreMessage));
+			
+			if(message != null)
+			{
+				for(int i = 0; i < message.scores.Length ; i++)
+				{
+					PlayerManager.instance.AddPlayerWithIndex(i);
+					playerScores[i].SetScore(message.scores[i].GetScore());
+				}
+				
+				Destroy(message.gameObject);
+			}
 		}
 		else
 			Destroy(gameObject);
 	}
 	
+	
+	private bool loading = false;
+	void Update()
+	{
+		int index = PlayerManager.instance.GetIndexOfLastPlayer();
+		
+		if(index != -1 && !loading)
+		{
+			loading = true;
+			
+			IncrementPlayerScore(index);
+			
+			PlayerScoreMessage.CreateMessage(playerScores.ToArray());
+			
+			Invoke("DelayThenReloadLevel", 0.3f);
+		}
+	}
+	
+	private void DelayThenReloadLevel()
+	{
+		Application.LoadLevel(Application.loadedLevel);
+	}
+	
 	public int GetPlayerScore(int index)
 	{
 		return playerScores[index].GetScore();
-	}
-	
-	public void IncrementMultiplier(int index, int amount)
-	{
-		playerScores[index].IncrementMultiplier(amount);
-	}
-	
-	public int GetPlayerMultiplier(int index)
-	{
-		return playerScores[index].GetMultiplier();
 	}
 	
 	public void SetPlayerScore(int index, int score)
@@ -47,17 +72,12 @@ public class ScoreManager : MonoBehaviour
 	
 	public void IncrementPlayerScore(int index)
 	{
-		playerScores[index].IncrementScore();
+		playerScores[index].IncrementScore();				
 	}
 	
-	public void ResetPlayerMultiplier(int index)
+	public void AddPlayerScore(int index)
 	{
-		playerScores[index].ResetMultiplier();
-	}
-	
-	public void AddPlayerScore()
-	{
-		playerScores.Add(new PlayerScore(multiplierCurve));
+		playerScores.Add(new PlayerScore(index));
 	}
 	
 }

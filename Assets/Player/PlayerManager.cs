@@ -27,11 +27,10 @@ public class PlayerManager : MonoBehaviour
 	
 	Texture[] faces;
 	
-	void Start()
+	void Awake()
 	{	
 		if(_instance == null)
 		{
-			
 			for(int i = 0; i < _connectedPlayers.Length; i++)
 				_connectedPlayers[i] = false;
 			
@@ -40,22 +39,17 @@ public class PlayerManager : MonoBehaviour
 			for(int i = 0 ; i < numberOfPlayers; i++)
 			{
 				_connectedPlayers[i] = true;
-				_AddPlayer(i);	
-				ScoreManager.instance.AddPlayerScore();
+				AddPlayer(i);	
+				ScoreManager.instance.AddPlayerScore(i);
 			}
 			
-			
-			ConfigurePlayerStuff();
 		}
 		else
 			Destroy(gameObject);
 	}
 	
 	
-	private void ConfigurePlayerStuff()
-	{
-		
-	}
+	
 	
 	// Update is called once per frame
 	void Update () 
@@ -66,25 +60,51 @@ public class PlayerManager : MonoBehaviour
 			{
 				numberOfPlayers++;
 				_connectedPlayers[i] = true;
-				_AddPlayer(i);
-				ScoreManager.instance.AddPlayerScore();
-				
-				ConfigurePlayerStuff();
+				AddPlayer(i);
+				ScoreManager.instance.AddPlayerScore(i);
 			}
 		}
 	}
 	
+	public void AddPlayerWithIndex(int i)
+	{
+		numberOfPlayers++;
+		_connectedPlayers[i] = true;
+		AddPlayer(i);
+		ScoreManager.instance.AddPlayerScore(i);	
+	}
 	
+	public int GetIndexOfLastPlayer()
+	{
+		int index = -1;
+		
+		int counter = 0;
+		for(int i = 0 ; i < players.Count ; i++)
+		{
+			if(!players[i].damageScript.dead)
+			{
+				counter++;
+				index = i;
+			}
+		}
+		
+		if(counter == 1 && players.Count >= 2)
+			return players[index].playerId;
+		else
+			return -1;
+	}
 	
-	private void _AddPlayer(int id)
+	public void AddPlayer(int id)
 	{
 		
 		Transform newPlayer = (Transform)Instantiate(playerPrefab, RespawnManager.instance.GetSpawnPos(), Quaternion.identity);
 		
 		newPlayer.GetComponent<PlayerId>().SetPlayerId(id + 1);
 		newPlayer.GetComponent<PlayerId>().color = playerColors[id];
-			
-		players.Add(new Player(id, newPlayer));
+		
+		TakeDamage damageScript = newPlayer.GetComponent<TakeDamage>();
+		
+		players.Add(new Player(id, newPlayer, damageScript));
 	}
 	
 	
