@@ -26,7 +26,8 @@ public class ScoreManager : MonoBehaviour
 			{
 				for(int i = 0; i < message.scores.Length ; i++)
 				{
-					PlayerManager.instance.AddPlayerWithIndex(i);
+					int index = message.scores[i].index;
+					PlayerManager.instance.AddPlayerWithIndex(index);
 					playerScores[i].SetScore(message.scores[i].GetScore());
 				}
 				
@@ -72,7 +73,11 @@ public class ScoreManager : MonoBehaviour
 	
 	public void IncrementPlayerScore(int index)
 	{
-		playerScores[index].IncrementScore();				
+		for(int i = 0 ; i < playerScores.Count ; i++)
+		{
+			if(playerScores[i].index == index)
+				playerScores[i].IncrementScore();
+		}
 	}
 	
 	public void AddPlayerScore(int index)
